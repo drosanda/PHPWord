@@ -274,6 +274,10 @@ class TemplateProcessor
         $elementWriter->write();
 
         $where = $this->findContainingXmlBlockForMacro($search, 'w:r');
+        if (version_compare(PHP_VERSION, '7.0.0') >= 0){
+          $where['start']??=0;
+          $where['end']??=0;
+        }
         $block = $this->getSlice($where['start'], $where['end']);
         $textParts = $this->splitTextIntoTexts($block);
         $this->replaceXmlBlock($search, $textParts, 'w:r');
